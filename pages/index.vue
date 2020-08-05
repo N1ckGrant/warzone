@@ -11,20 +11,17 @@ import Tabs from '../components/Tabs/Tabs'
 export default {
   components: { Tabs },
   data: () => ({
-    dataTabs: {}
+    dataTabs: {},
+    user: {
+      battleID: 'Lems%2321439'
+    }
   }),
   mounted () {
-    // this.$axios
-    //   .get('https://warzone.ga:5002/api/mw/getlifetimestats/mp/Lems%2321439')
-    //   .then(response => {
-    //     console.log(response.data.lifeTimeStatsMP)
-    //     this.dataTabs = response.data.lifeTimeStatsMP
-    //   });
     this.getApi()
   },
   methods: {
     getApi () {
-      this.$api.get('getlifetimestats/mp/Lems%2321439').then((response) => {
+      this.$api.get(`${'getlifetimestats/mp/' + this.battleID}`).then((response) => {
         console.log(response, 'response')
         this.dataTabs = response.data.lifeTimeStatsMP
       })
