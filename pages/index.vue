@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     getApi () {
-      this.$api.get(`${'getlifetimestats/mp/' + this.battleID}`).then((response) => {
+      this.$api.get(`${'getlifetimestats/mp/' + this.user.battleID}`).then((response) => {
         console.log(response, 'response')
         this.dataTabs = response.data.lifeTimeStatsMP
       })
