@@ -8,7 +8,7 @@
         two
       </div>
     </div>
-    <div v-if="radioTabs == 1" class="Tabs-item">
+    <div v-if="radioTabs === 1" class="Tabs-item">
       <div class="head">
         <div class="head_child caption">
           Lifetime Overview
@@ -28,11 +28,11 @@
       </div>
       <div class="table">
         <div class="rate-box">
-          <tips title="K/D Ratio" :int="data.kdRatio" />
-          <tips title="Wins" :int="data.wins" />
-          <tips title="Win %" :int="`${data.winPercent + '%'}`" />
-          <tips title="Kills" :int="data.kills" />
-          <tips title="Avg. Life" :int="data.avgLifeTime" />
+          <tips title="K/D Ratio" :int="MP.kdRatio" />
+          <tips title="Wins" :int="MP.wins" />
+          <tips title="Win %" :int="`${MP.winPercent + '%'}`" />
+          <tips title="Kills" :int="MP.kills" />
+          <tips title="Avg. Life" :int="MP.avgLifeTime" />
         </div>
         <div class="rows">
           <div class="item">
@@ -40,7 +40,7 @@
               Losses
             </div>
             <div class="val">
-              {{ data.losses }}
+              {{ MP.losses }}
             </div>
           </div>
           <div class="item">
@@ -48,7 +48,7 @@
               Ties
             </div>
             <div class="val">
-              {{ data.ties }}
+              {{ MP.ties }}
             </div>
           </div>
           <div class="item">
@@ -56,7 +56,7 @@
               W/L Ratio
             </div>
             <div class="val">
-              {{ data.winLossRatio }}
+              {{ MP.winLossRatio }}
             </div>
           </div>
           <div class="item">
@@ -64,7 +64,7 @@
               Deaths
             </div>
             <div class="val">
-              {{ data.deaths }}
+              {{ MP.deaths }}
             </div>
           </div>
           <div class="item">
@@ -72,7 +72,7 @@
               Assists
             </div>
             <div class="val">
-              {{ data.assists }}
+              {{ MP.assists }}
             </div>
           </div>
           <div class="item">
@@ -80,7 +80,7 @@
               Suicides
             </div>
             <div class="val">
-              {{ data.suicides }}
+              {{ MP.suicides }}
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
               Total Score
             </div>
             <div class="val">
-              {{ data.totalScore }}
+              {{ MP.totalScore }}
             </div>
           </div>
           <div class="item">
@@ -98,7 +98,7 @@
               Score/Match
             </div>
             <div class="val">
-              {{ data.scorePerGame }}
+              {{ MP.scorePerGame }}
             </div>
           </div>
           <div class="item">
@@ -106,7 +106,7 @@
               Score/Minute
             </div>
             <div class="val">
-              {{ data.scorePerMinute }}
+              {{ MP.scorePerMinute }}
             </div>
           </div>
           <div class="item">
@@ -114,7 +114,7 @@
               1shot-1kills
             </div>
             <div class="val">
-              {{ data.oneShotOneKills }}
+              {{ MP.oneShotOneKills }}
             </div>
           </div>
           <div class="item">
@@ -122,7 +122,7 @@
               Long range kills
             </div>
             <div class="val">
-              {{ data.longshotKills }}
+              {{ MP.longshotKills }}
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@
               Longest Win Streak
             </div>
             <div class="val">
-              {{ data.longestWinStreak }}
+              {{ MP.longestWinStreak }}
             </div>
           </div>
           <div class="item">
@@ -141,7 +141,7 @@
               Longest Kill Streak
             </div>
             <div class="val">
-              {{ data.recordKillStreak }}
+              {{ MP.recordKillStreak }}
             </div>
           </div>
           <div class="item">
@@ -149,7 +149,7 @@
               Highest Kills/Match
             </div>
             <div class="val">
-              {{ data.recordKillsInAMatch }}
+              {{ MP.recordKillsInAMatch }}
             </div>
           </div>
           <div class="item">
@@ -157,7 +157,7 @@
               Best K/D
             </div>
             <div class="val">
-              {{ data.bestKD }}
+              {{ MP.bestKD }}
             </div>
           </div>
           <div class="item">
@@ -165,7 +165,7 @@
               Best Score/Match
             </div>
             <div class="val">
-              {{ data.bestScore }}
+              {{ MP.bestScore }}
             </div>
           </div>
           <div class="item">
@@ -173,14 +173,14 @@
               Best Score/Min
             </div>
             <div class="val">
-              {{ data.bestSPM }}
+              {{ MP.bestSPM }}
             </div>
           </div>
         </div>
       </div>
       <div class="info-statistics">
-        <slider :labels="[{name: `${'Misses' + '(' + data.misses + ')'}`, color: '#E4E4E4'}, {name: `${'Hits' + '(' + data.hits + ')'}`, color: '#E8BE11'}]" :value="data.hitsPercent" title="Accuracy" />
-        <slider :labels="[{name: `${'Headshots' + '(' + data.headshots + ')'}`, color: '#E8BE11'}]" :value="data.HSPercent" title="Headshot Accuracy" />
+        <slider :labels="[{name: `${'Misses' + '(' + MP.misses + ')'}`, color: '#E4E4E4'}, {name: `${'Hits' + '(' + MP.hits + ')'}`, color: '#E8BE11'}]" :value="MP.hitsPercent" title="Accuracy" />
+        <slider :labels="[{name: `${'Headshots' + '(' + MP.headshots + ')'}`, color: '#E8BE11'}]" :value="MP.HSPercent" title="Headshot Accuracy" />
       </div>
     </div>
   </div>
@@ -192,14 +192,30 @@ import Slider from './slider'
 export default {
   name: 'Tabs',
   components: { Slider, Tips },
-  props: {
-    data: {
-      type: Object
-    }
-  },
   data: () => ({
-    radioTabs: 1
-  })
+    radioTabs: 1,
+    MP: {},
+    WZ: {},
+    user: {
+      battleID: 'Lems%2321439'
+    }
+  }),
+  async mounted () {
+    await this.getApi()
+  },
+  methods: {
+    getApi () {
+      this.$api.get(`${'getlifetimestats/mp/' + this.user.battleID}`).then((response) => {
+        console.log(response, 'response')
+        this.MP = response.data.lifeTimeStatsMP
+      })
+      this.$api.get(`${'getlifetimestats/wz/' + this.user.battleID}`).then((response) => {
+        console.log(response, 'response WZ')
+        this.WZ = response.data.lifeTimeStatsWZ
+      })
+      // console.log(this.$api)
+    }
+  }
 }
 </script>
 

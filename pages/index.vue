@@ -9,25 +9,7 @@
 <script>
 import Tabs from '../components/Tabs/Tabs'
 export default {
-  components: { Tabs },
-  data: () => ({
-    dataTabs: {},
-    user: {
-      battleID: 'Lems%2321439'
-    }
-  }),
-  mounted () {
-    this.getApi()
-  },
-  methods: {
-    getApi () {
-      this.$api.get(`${'getlifetimestats/mp/' + this.user.battleID}`).then((response) => {
-        console.log(response, 'response')
-        this.dataTabs = response.data.lifeTimeStatsMP
-      })
-      // console.log(this.$api)
-    }
-  }
+  components: { Tabs }
 }
 </script>
 
